@@ -1,0 +1,309 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import profileImage from '../assets/avatar.png';
+
+const { activeTab } = Astro.props;
+const name = "Sebastian Schweiger";
+
+const tabs = [
+  { name: "Home", href: "/" },
+  { name: "Blog", href: "/blog" },
+  { name: "Resume", href: "/resume" },
+];
+
+const socials = [
+  { aria: 'Email', icon: 'fa6-solid:envelope', href: 'mailto:public@sschwei1.com' },
+  { aria: 'Github', icon: 'fa6-brands:github', href: 'https://github.com/sschwei1' },
+  { aria: 'LinkedIn', icon: 'fa6-brands:linkedin', href: 'https://www.linkedin.com/in/sschwei1' },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{activeTab} | {name}</title>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body>
+    <div class="app-container">
+      <header class="mobile-nav-bar">
+        <div id="menu-toggle" aria-label="Toggle menu">
+          <Icon name="fa6-solid:bars" class="icon-menu" />
+          <Icon name="fa6-solid:xmark" class="icon-close" />
+        </div>
+      </header>
+
+      <aside class="sidebar">
+        <div class="profile-viewport">
+          <Image
+            src={profileImage}
+            alt={name}
+            class="profile-img"
+            loading="eager"
+          />
+        </div>
+        <h1 class="name">{name}</h1>
+        <p class="bio">Just a random guy on the internet</p>
+        <div class="socials">
+          {socials.map((social) => (
+            <a href={social.href} target="_blank" aria-label={social.aria}>
+              <Icon name={social.icon} />
+            </a>
+          ))}
+        </div>
+      </aside>
+
+      <main class="content">
+        <nav id="nav-menu" class="tab-nav">
+          {tabs.map(tab => (
+            <a
+              href={tab.href}
+              class={activeTab === tab.name ? 'tab-item active' : 'tab-item'}
+            >
+              {tab.name}
+            </a>
+          ))}
+        </nav>
+
+        <section class="content-area">
+          <slot />
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+  /* Base Setup */
+  :root {
+    --bg: #0b0b0b;
+    --text-main: #f3f3f4;
+    --text-muted: #94a3b8;
+    --border: #34312d;
+    --nav-bg: #1e293b;
+  }
+
+  body {
+    background-color: var(--bg);
+    position: relative;
+    overflow-x: hidden;
+
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: 24px 24px;
+    transform: rotate(10deg);
+
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Layout */
+  .app-container {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 2px solid var(--border);
+  }
+
+  .content {
+  }
+
+  /* Profile Tab */
+  .profile-viewport {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--border);
+  }
+
+  .profile-img {
+    width: 100%;
+    height: 100%;
+    scale: 1.5;
+  }
+
+  .name {
+    margin-bottom: 0;
+  }
+
+  .bio {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-muted);
+  }
+
+  .socials {
+    margin: 1rem 0;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .socials [data-icon] {
+    width: 40px;
+    height: 40px;
+    color: var(--text-main);
+    transition: all 0.3s ease;
+  }
+
+  .socials [data-icon]:hover {
+    opacity: 0.6;
+  }
+
+  /* Content Tab */
+  .tab-nav {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .tab-nav .tab-item {
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--text-main);
+    border-bottom: 2px solid transparent;
+  }
+
+  .tab-nav .tab-item.active {
+    border-bottom: 2px solid var(--text-main);
+  }
+
+  .tab-nav .tab-item:hover {
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--text-muted);
+  }
+
+  .content-area {
+    padding: 2rem;
+  }
+
+  /* Mobile Stuff */
+  .mobile-nav-bar {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      height: auto;
+      overflow-y: auto;
+    }
+
+    .app-container {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      border-right: none;
+      border-bottom: 2px solid var(--border);
+      padding: 3rem 1rem;
+      height: auto;
+    }
+
+    .mobile-nav-bar {
+      display: flex;
+      flex-direction: row-reverse;
+      height: 60px;
+      align-items: center;
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    #menu-toggle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+    }
+
+    #menu-toggle .icon-close {
+      display: none;
+    }
+
+    .menu-open #menu-toggle .icon-menu {
+      display: none;
+    }
+
+    .menu-open #menu-toggle .icon-close {
+      display: block;
+    }
+
+    #nav-menu {
+      padding: 0;
+    }
+
+    .tab-nav {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 60px;
+      z-index: 99;
+      gap: 0;
+      background: var(--bg);
+      border: none;
+    }
+
+    .tab-nav .tab-item {
+      font-size: 1.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-nav .tab-item.active {
+      border-bottom: 1px solid var(--text-main);
+    }
+
+    .tab-nav .tab-item:hover {
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--text-muted);
+    }
+
+    .tab-nav.show {
+      display: flex;
+    }
+  }
+
+</style>
+
+<script>
+  const btn = document.getElementById('menu-toggle');
+  const nav = document.getElementById('nav-menu');
+
+  btn?.addEventListener('click', () => {
+    nav?.classList.toggle('show');
+    document.body.classList.toggle('menu-open');
+  });
+</script>
+

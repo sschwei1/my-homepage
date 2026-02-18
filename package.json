@@ -1,0 +1,21 @@
+{
+  "name": "my-homepage",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@iconify-json/fa6-brands": "^1.2.6",
+    "@iconify-json/fa6-solid": "^1.2.4",
+    "astro": "^5.17.1",
+    "astro-icon": "^1.1.5",
+    "prettier-plugin-astro": "^0.14.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1"
+  }
+}
