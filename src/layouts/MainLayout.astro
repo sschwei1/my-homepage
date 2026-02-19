@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import profileImage from '../assets/avatar.png';
@@ -8,6 +10,7 @@ const name = "Sebastian Schweiger";
 
 const tabs = [
   { name: "Home", href: "/" },
+  { name: 'Projects', href: "/projects" },
   { name: "Blog", href: "/blog" },
   { name: "Resume", href: "/resume" },
 ];
@@ -79,21 +82,13 @@ const socials = [
 
 <style>
   /* Base Setup */
-  :root {
-    --bg: #0b0b0b;
-    --text-main: #f3f3f4;
-    --text-muted: #94a3b8;
-    --border: #34312d;
-    --nav-bg: #1e293b;
-  }
-
   body {
     background-color: var(--bg);
     position: relative;
     overflow-x: hidden;
 
     color: var(--text-main);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Verdana', 'Inter', sans-serif;
     margin: 0;
     line-height: 1.6;
     width: 100vw;
@@ -115,6 +110,11 @@ const socials = [
 
     z-index: -1;
     pointer-events: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--text-main);
   }
 
   /* Layout */
@@ -153,6 +153,7 @@ const socials = [
 
   .name {
     margin-bottom: 0;
+    text-align: center;
   }
 
   .bio {
@@ -225,6 +226,10 @@ const socials = [
       border-bottom: 2px solid var(--border);
       padding: 3rem 1rem;
       height: auto;
+    }
+
+    .content-area {
+      padding: 1rem .5rem;
     }
 
     .mobile-nav-bar {
