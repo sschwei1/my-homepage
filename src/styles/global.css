@@ -2,12 +2,13 @@
     --bg: #0b0b0b;
     --text-main: #f3f3f4;
     --text-muted: #94a3b8;
+    --link: #3d6bcc;
     --border: #34312d;
     --nav-bg: #1e293b;
 }
 
 a {
-    color: var(--text-muted);
+    color: var(--link);
     text-decoration: none;
 }
 
