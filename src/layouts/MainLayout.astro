@@ -3,23 +3,14 @@ import '../styles/global.css';
 
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
+
 import profileImage from '../assets/avatar.png';
+
+import { navigation as tabs } from '../data/navigation';
+import { socials } from '../data/socials';
 
 const { activeTab } = Astro.props;
 const name = "Sebastian Schweiger";
-
-const tabs = [
-  { name: "Home", href: "/" },
-  { name: 'Projects', href: "/projects" },
-  { name: "Blog", href: "/blog" },
-  { name: "Resume", href: "/resume" },
-];
-
-const socials = [
-  { aria: 'Email', icon: 'fa6-solid:envelope', href: 'mailto:public@sschwei1.com' },
-  { aria: 'Github', icon: 'fa6-brands:github', href: 'https://github.com/sschwei1' },
-  { aria: 'LinkedIn', icon: 'fa6-brands:linkedin', href: 'https://www.linkedin.com/in/sschwei1' },
-];
 ---
 
 <html lang="en">
@@ -68,6 +59,7 @@ const socials = [
               href={tab.href}
               class={activeTab === tab.name ? 'tab-item active' : 'tab-item'}
             >
+              {tab.icon && <Icon name={tab.icon} />}
               {tab.name}
             </a>
           ))}
@@ -192,6 +184,11 @@ const socials = [
     text-decoration: none;
     color: var(--text-main);
     border-bottom: 2px solid transparent;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
   }
 
   .tab-nav .tab-item.active {
@@ -230,7 +227,7 @@ const socials = [
     }
 
     .content-area {
-      padding: 1rem .5rem;
+      padding: 1.25rem 1rem;
     }
 
     .mobile-nav-bar {

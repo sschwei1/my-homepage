@@ -1,0 +1,36 @@
+---
+import Section from "../components/Section.astro";
+import Tag from "../components/Tag.astro";
+
+const { project } = Astro.props;
+---
+
+<Section class="project-section" href="#" target="_blank">
+  <h3>{project.name}</h3>
+  <div class="description">{project.description}</div>
+  <div class="tags">
+    {project.tags.map(tag => (
+      <Tag name={tag} />
+    ))}
+  </div>
+</Section>
+
+<style>
+  .tags {
+    padding: 1rem 0;
+  }
+
+  .read-more {
+    width: 100%;
+    text-align: right;
+  }
+
+  :global(.project-section) {
+    cursor: pointer;
+    border: 1px solid var(--border);
+  }
+
+  :global(.project-section:hover) {
+    border: 1px solid var(--text-main);
+  }
+</style>

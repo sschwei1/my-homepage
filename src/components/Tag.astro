@@ -1,0 +1,48 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getTagByName } from '../data/tags';
+
+const {
+  name,
+  showIcon = true,
+  showLink = true
+} = Astro.props;
+
+const tag = getTagByName(name);
+const Element = showLink && tag.url ? 'a' : 'span';
+---
+
+<Element
+  href={tag.url}
+  class={showLink && tag.url ? "tag-link" : "tag"}
+  target={showLink && tag.url ? "_blank" : undefined}
+>
+  {showIcon && <Icon name={tag.icon} class="tag-icon" />}
+  <span class="tag-name">{tag.name}</span>
+</Element>
+
+<style>
+  .tag, .tag-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: var(--text-main);
+    color: var(--bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+  }
+
+  .tag-link:hover {
+    text-decoration: none;
+    background: color-mix(in srgb, var(--text-main) 80%, black);
+  }
+
+  .tag-icon {
+    width: 16px;
+    height: 16px;
+  }
+</style>

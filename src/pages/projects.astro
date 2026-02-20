@@ -1,11 +1,29 @@
 ---
 import Layout from "../layouts/MainLayout.astro";
-import SectionText from "../components/SectionText.astro";
+import Project from "../components/Project.astro";
+import Section from "../components/Section.astro";
+
+import { projects } from "../data/projects";
 ---
 
 <Layout activeTab="Projects">
-  <SectionText>
-    <h2>Projects</h2>
-    <p>Coming soon!</p>
-  </SectionText>
+  <div class="project-container">
+    {projects.map(project => (
+      <Project project={project} />
+    ))}
+  </div>
 </Layout>
+
+<style>
+  .project-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .project-container {
+      gap: 1.25rem;
+    }
+  }
+</style>

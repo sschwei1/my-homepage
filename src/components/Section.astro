@@ -1,0 +1,22 @@
+---
+const { class: className, href, ...rest } = Astro.props;
+const Element = href ? 'a' : 'div';
+---
+
+<Element {...rest} href={href} class:list={['section', className]}>
+  <slot />
+</Element>
+
+<style>
+  .section {
+    padding: 0.5rem 1.5rem;
+    background: rgba(40, 40, 40, 0.5);
+    border-radius: 5px;
+  }
+
+  a.section {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+</style>
