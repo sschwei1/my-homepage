@@ -7,6 +7,13 @@ import { projects } from "../data/projects";
 ---
 
 <Layout activeTab="Projects">
+  <div class='project-head'>
+    <Section>
+      <h2>Projects</h2>
+      <p>Currently under development</p>
+    </Section>
+  </div>
+
   <div class="project-container">
     {projects.map(project => (
       <Project project={project} />
@@ -15,6 +22,10 @@ import { projects } from "../data/projects";
 </Layout>
 
 <style>
+  .project-head {
+    margin-bottom: 2rem;
+  }
+
   .project-container {
     display: flex;
     flex-direction: column;
@@ -22,6 +33,10 @@ import { projects } from "../data/projects";
   }
 
   @media (max-width: 768px) {
+    .project-head {
+      margin-bottom: 1.25rem;
+    }
+
     .project-container {
       gap: 1.25rem;
     }
